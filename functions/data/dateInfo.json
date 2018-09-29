@@ -1,0 +1,27 @@
+{
+    "sommerferien": [
+        { "start": "28/06/2018", "end": "08/08/2018"},
+        { "start": "04/07/2019", "end": "14/08/2019"},
+        { "start": "16/07/2020", "end": "26/08/2020"}
+    ],
+
+    "sommertime": [
+        { "start": "25/05/2018", "end": "29/10/2018"},
+        { "start": "31/05/2019", "end": "27/10/2019"},
+        { "start": "29/05/2020", "end": "25/10/2020"}
+    ],
+
+    "holidays": [
+        {"date": "25/12/2017", "name": "Christmas Day"},
+        {"date": "26/12/2017", "name": "St Stephens Day"},
+        {"date": "01/01/2018", "name": "New Year's Day"},
+        {"date": "30/03/2018", "name": "Good Friday"},
+        {"date": "02/04/2018", "name": "Easter Monday"},
+        {"date": "01/05/2018", "name": "Labour Day"},
+        {"date": "10/05/2018", "name": "Ascension Day"},
+        {"date": "21/05/2018", "name": "Whit Monday"},
+        {"date": "03/10/2018", "name": "German Unity Day"},
+        {"date": "25/12/2018", "name": "Christmas Day"},
+        {"date": "26/12/2018", "name": "St Stephens Day"}
+    ]
+}

@@ -1,0 +1,62 @@
+{
+	"cities": [
+		{
+			"type": "city",
+			"name": "Göttingen",
+			"lat": 51.5328248,
+			"lng": 9.9346455,
+			"radius": 5000,
+			"locations": [
+				{
+					"type": "place",
+					"name": "Home",
+					"lat": 51.5387426,
+					"lng": 9.9601642,
+					"radius": 20
+				},
+				{
+					"type": "place",
+					"name": "Kaufland",
+					"lat": 51.5306971,
+					"lng": 9.937072,
+					"radius": 20
+				},
+				{
+					"type": "place",
+					"name": "School",
+					"lat": 51.5429724,
+					"lng": 9.956115,
+					"radius": 150
+				},
+				{
+					"type": "bus_stop",
+					"name": "Rohns",
+					"lat": 51.538401,
+					"lng": 9.9617802,
+					"radius": 5
+				},
+				{
+					"type": "bus_stop",
+					"name": "Jüdenstraße",
+					"lat": 51.5326248,
+					"lng": 9.9372441,
+					"radius": 5
+				},
+				{
+					"type": "bus_stop",
+					"name": "Kornmarkt",
+					"lat": 51.5316893,
+					"lng": 9.9347681,
+					"radius": 5
+				},
+				{
+					"type": "bus_stop",
+					"name": "Bahnhof",
+					"lat": 51.5349544,
+					"lng": 9.9268478,
+					"radius": 5
+				}
+			]
+		}
+	]
+}

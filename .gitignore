@@ -1,2 +1,7 @@
 # ignore node_modules
-functions/node_modules/
+/functions/node_modules/
+/node_modules/
+/functions/private/
+
+# credentials
+digital-rhythm-156015-firebase-adminsdk-bbcua-2dff6d13bb.json
