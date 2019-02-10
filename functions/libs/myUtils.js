@@ -1,6 +1,6 @@
 const datetime = require('date-and-time');
 
-const LOCAL_OFFSET = 2;
+const LOCAL_OFFSET = 1;
 
 module.exports = {
 	getLocalTime,

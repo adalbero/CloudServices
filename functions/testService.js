@@ -140,7 +140,7 @@ function adSenseServiceTest() {
 	console.log("adSenseServiceTest");
 
 	const params = {
-		source: "test Service",
+		source: "TEST",
 		command: "excel"
 	};
 

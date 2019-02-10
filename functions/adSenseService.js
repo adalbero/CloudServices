@@ -2,6 +2,7 @@ const util = require('./libs/myUtils');
 const adSense = require('./libs/myAdSense');
 const sheets = require('./libs/mySheets');
 const adSenseSheet = require('./libs/myAdSenseSheet');
+const bigQuery = require('./libs/myBigQuery');
 
 module.exports = {
 	adSenseServiceHandler
@@ -12,8 +13,9 @@ const spreadsheetId = "1YoqIhMAjCgISIuX7ggxKCFjHxELzLpiJ0-zY91Ul5Gk";
 function adSenseServiceHandler(params, callback) {
 	var result = {
 		success: true,
-		version: "1.1",
-		source: params.source
+		version: "1.2",
+		source: params.source,
+		value: {}
 	}
 
 	var now = util.getLocalTime();
@@ -44,56 +46,73 @@ function adSenseServiceHandler(params, callback) {
 		}
 	} else {
 		console.log("Default: append");
-		try {
-			var value = {
-				todayReport: adSense.getTodayReport(),
-				monthReport: adSense.getMonthReport()
-			}
-
-			value.timestamp = timestamp;
-
-			//appendValues(params.source, value);
-			adSenseSheet.appendAdSenseValues(params.source, value);
-
-			result.value = value;
-		} catch (ex) {
-			console.log("Err at append");
-			result.success = false;
-			result.error = ex;
-		}
+		runAdSenseReport(result);
+		runUserReport(result, callback);
+		return;
 	}
 
 	callback(result);
 }
 
-function appendValues(source, adSenseValue) {
-	var now = util.getLocalTime();
-	var values = [];
+function runAdSenseReport(result) {
+	console.log("adSense Report...");
 
-	if (now.getHours() == 1) {
-		values = [
-			[source, 
-			adSenseValue.todayReport.yesterday.date + " 23:59", 
-			adSenseValue.todayReport.yesterday.earnings, 
-			adSenseValue.todayReport.yesterday.impressions, 
-			adSenseValue.todayReport.yesterday.clicks]
-		];
-		sheets.runAppend(spreadsheetId, "Hour!A1", values);
+	try {
+		result.value.timestamp = result.timestamp;
+
+		result.value.todayReport = adSense.getTodayReport();
+		result.value.monthReport = adSense.getMonthReport();
+
+		console.log("adSense Report. END");
+
+	} catch (ex) {
+		console.log("Err at adSense report");
+		result.success = false;
+		result.error = ex;
 	}
-
-	values = [
-		[source, 
-		adSenseValue.timestamp, 
-		adSenseValue.todayReport.today.earnings, 
-		adSenseValue.todayReport.today.impressions, 
-		adSenseValue.todayReport.today.clicks,
-		adSenseValue.todayReport.yesterday.earnings,
-		adSenseValue.monthReport.thisMonth.earnings,
-		adSenseValue.monthReport.lastMonth.earnings]
-	];
-
-	sheets.appendValues(spreadsheetId, "Hour!A1", values);
 
 }
 
+function runUserReport(result, callback) {
+	console.log("User Report...");
 
+	var now = util.getYesterday();
+	var yesterday = util.formatDateTime(now, "YYYYMMDD");
+
+	bigQuery.report(yesterday)
+		.then(res => {
+			result.value.todayReport.today.users = res[0].users;
+			result.value.todayReport.today.engagment = res[0].engagement;
+			result.value.todayReport.yesterday.users = res[1].users;
+			result.value.todayReport.yesterday.engagment = res[1].engagement;
+
+			console.log("User Report. END");
+
+			appendValues(result, callback);
+		})
+		.catch(ex => {
+			console.log("Err at User report");
+			result.success = false;
+			result.error = ex;
+
+			callback(result);
+		});
+
+}
+
+function appendValues(result, callback) {
+	console.log("appendValues...");
+
+	try {
+
+		adSenseSheet.appendAdSenseValues(result.source, result.value);
+		console.log("appendValues. END");
+
+	} catch (ex) {
+		console.log("Err at append");
+		result.success = false;
+		result.error = ex;
+	}
+
+	callback(result);
+}

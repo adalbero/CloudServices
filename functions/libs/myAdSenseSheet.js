@@ -18,6 +18,10 @@ const FIELD_CLICK = 5;
 const FIELD_EARN_LAST_D = 6;
 const FIELD_EARN_THIS_M = 7;
 const FIELD_EARN_LAST_M = 8;
+const FIELD_USERS = 9;
+const FIELD_ENGAGE = 10;
+const FIELD_USERS_LAST = 11;
+const FIELD_ENGAGE_LAST = 12;
 
 function main() {
 	var adValues = {
@@ -59,9 +63,13 @@ function appendAdSenseValues(source, adValues) {
 			adValues.todayReport.today.earnings, 
 			adValues.todayReport.today.impressions, 
 			adValues.todayReport.today.clicks,
+			adValues.todayReport.today.users,
+			adValues.todayReport.today.engagment,
 			adValues.todayReport.yesterday.earnings,
 			adValues.monthReport.thisMonth.earnings,
-			adValues.monthReport.lastMonth.earnings
+			adValues.monthReport.lastMonth.earnings,
+			adValues.todayReport.yesterday.users,
+			adValues.todayReport.yesterday.engagment,
 		]
 	];
 
@@ -89,11 +97,15 @@ function getNewValues(lastValues, thisValues, now) {
 		values: [
 			lastValues[0][FIELD_EARN]*1,
 			lastValues[0][FIELD_IMP]*1,
-			lastValues[0][FIELD_CLICK]*1
+			lastValues[0][FIELD_CLICK]*1,
+			lastValues[0][FIELD_USERS]*1,
+			lastValues[0][FIELD_ENGAGE]*1,
 		],
 		lastDay: lastValues[0][FIELD_EARN_LAST_D],
 		thisMonth: lastValues[0][FIELD_EARN_THIS_M],
-		lastMonth: lastValues[0][FIELD_EARN_LAST_M]
+		lastMonth: lastValues[0][FIELD_EARN_LAST_M],
+		lastUsers: lastValues[0][FIELD_USERS_LAST],
+		lastEngagment: lastValues[0][FIELD_ENGAGE_LAST]
 
 	}
 
@@ -104,11 +116,16 @@ function getNewValues(lastValues, thisValues, now) {
 		values: [
 			thisValues[0][FIELD_EARN],
 			thisValues[0][FIELD_IMP],
-			thisValues[0][FIELD_CLICK]
+			thisValues[0][FIELD_CLICK],
+			thisValues[0][FIELD_USERS],
+			thisValues[0][FIELD_ENGAGE]
 		],
 		lastDay: thisValues[0][FIELD_EARN_LAST_D],
 		thisMonth: thisValues[0][FIELD_EARN_THIS_M],
-		lastMonth: thisValues[0][FIELD_EARN_LAST_M]
+		lastMonth: thisValues[0][FIELD_EARN_LAST_M],
+		lastUsers: thisValues[0][FIELD_USERS_LAST],
+		lastEngagment: thisValues[0][FIELD_ENGAGE_LAST]
+
 	}
 
 	if (thisRecord.date == lastRecord.date && thisRecord.hour == lastRecord.hour + 1) {
@@ -136,10 +153,14 @@ function getNewValues(lastValues, thisValues, now) {
 				thisRecord.lastDay,
 				0,
 				0,
+				thisRecord.lastUsers,
+				thisRecord.lastEngagment
 			],
 			lastDay: thisValues.lastDay,
 			thisMonth: thisValues.thisMonth,
-			lastMonth: thisValues.lastMonth
+			lastMonth: thisValues.lastMonth,
+			lastUsers: thisValues.lastUsers,
+			lastEngagment: thisValues.lastEngagment,
 		}
 
 		fillGap(values, lastRecord, endRecord);
@@ -151,11 +172,16 @@ function getNewValues(lastValues, thisValues, now) {
 			values: [
 				0,
 				0,
+				0,
+				0,
 				0
 			],
 			lastDay: thisValues.lastDay,
 			thisMonth: thisValues.thisMonth,
-			lastMonth: thisValues.lastMonth
+			lastMonth: thisValues.lastMonth,
+			lastUsers: thisValues.lastUsers,
+			lastEngagment: thisValues.lastEngagment
+
 		}
 
 	}
@@ -189,6 +215,8 @@ function fillGap(values, lastRecord, thisRecord) {
 		row.push(thisRecord.lastDay);
 		row.push(thisRecord.thisMonth);
 		row.push(thisRecord.lastMonth);
+		row.push(thisRecord.lastUsers);
+		row.push(thisRecord.lastEngagment);
 		values.push(row);
 	}
 }
