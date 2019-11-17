@@ -15,11 +15,11 @@ const FIELD_HOUR = 2;
 const FIELD_EARN = 3;
 const FIELD_IMP = 4;
 const FIELD_CLICK = 5;
-const FIELD_EARN_LAST_D = 6;
-const FIELD_EARN_THIS_M = 7;
-const FIELD_EARN_LAST_M = 8;
-const FIELD_USERS = 9;
-const FIELD_ENGAGE = 10;
+const FIELD_USERS = 6;
+const FIELD_ENGAGE = 7;
+const FIELD_EARN_LAST_D = 8;
+const FIELD_EARN_THIS_M = 9;
+const FIELD_EARN_LAST_M = 10;
 const FIELD_USERS_LAST = 11;
 const FIELD_ENGAGE_LAST = 12;
 

@@ -39,6 +39,8 @@ function getQuery(date) {
 		GROUP BY event_date ORDER BY 1 desc`
 }
 
+const RUN_QUERY = false;
+
 function report(date) {
 	var sqlQuery = getQuery(date);
 
@@ -47,16 +49,23 @@ function report(date) {
 		useLegacySql: false
 	}
 
-	return new Promise(function(resolve, reject) {
-		bigquery
-			.query(options)
-			.then(results => {
-				resolve(results[0]);
-			})
-			.catch(err => {
-				reject(err);
-			})
+	if (RUN_QUERY) {
+		console.log("BigQuery Run...");
+		return new Promise(function(resolve, reject) {
+			bigquery
+				.query(options)
+				.then(results => {
+					resolve(results[0]);
+				})
+				.catch(err => {
+					reject(err);
+				})
+			});
+	} else {
+		return new Promise(function(resolve, reject) {
+			resolve(null);
 		});
+	}
 };
 
 

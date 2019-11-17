@@ -1,6 +1,6 @@
 const datetime = require('date-and-time');
 
-const LOCAL_OFFSET = 1;
+const LOCAL_OFFSET = 1; // 1=Standard time, 2=Summer time
 
 module.exports = {
 	getLocalTime,

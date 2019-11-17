@@ -46,6 +46,7 @@ function adSenseServiceHandler(params, callback) {
 		}
 	} else {
 		console.log("Default: append");
+		
 		runAdSenseReport(result);
 		runUserReport(result, callback);
 		return;
@@ -81,10 +82,17 @@ function runUserReport(result, callback) {
 
 	bigQuery.report(yesterday)
 		.then(res => {
-			result.value.todayReport.today.users = res[0].users;
-			result.value.todayReport.today.engagment = res[0].engagement;
-			result.value.todayReport.yesterday.users = res[1].users;
-			result.value.todayReport.yesterday.engagment = res[1].engagement;
+			if (res) {
+				result.value.todayReport.today.users = res[0].users;
+				result.value.todayReport.today.engagment = res[0].engagement;
+				result.value.todayReport.yesterday.users = res[1].users;
+				result.value.todayReport.yesterday.engagment = res[1].engagement;
+			} else {
+				result.value.todayReport.today.users = 0;
+				result.value.todayReport.today.engagment = 0;
+				result.value.todayReport.yesterday.users = 0;
+				result.value.todayReport.yesterday.engagment = 0;
+			}
 
 			console.log("User Report. END");
 
@@ -97,7 +105,6 @@ function runUserReport(result, callback) {
 
 			callback(result);
 		});
-
 }
 
 function appendValues(result, callback) {
