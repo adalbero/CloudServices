@@ -16,7 +16,7 @@
     "firebase-functions": "^3.3.0",
     "geolib": "^2.0.24",
     "lodash": "^4.17.11",
-    "moment-timezone": "^0.5.16",
+    "moment-timezone": "^0.5.35",
     "request": "^2.88.0",
     "sshpk": "^1.16.1",
     "sync-request": "^4.1.0"
